@@ -36,6 +36,7 @@ function Game(numMine) {
                         // it is a mine
                         && backBoard[x + i][y + j] === -1
                     ) {
+                        // let the number add one
                         backBoard[x][y] += 1;
                     }
                 }
