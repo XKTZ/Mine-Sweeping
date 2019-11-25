@@ -1,4 +1,10 @@
-$(function () {
-    let game = new Game(10);
-    game.initGame();
+let game = new Vue({
+    //
+    el: "#game",
+    data: {
+
+    },
+    methods: {
+
+    },
 });

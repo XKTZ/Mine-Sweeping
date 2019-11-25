@@ -9,7 +9,7 @@ function Game(numMine) {
     // front board -> the board show to users
     let frontBoard = [];
     // is wined or not
-    let win = false;
+    let win = null;
     // Function to init a board
     this.initBoards = function () {
         for (let i = 0; i < 10; i++) {
@@ -32,7 +32,7 @@ function Game(numMine) {
                         // y-axis is not negative or more than 10
                         && (0 <= (y + j) && (y + j) <= 9)
                         // it is not self
-                        && (i !== 0 && j !== 0)
+                        && (!(i === 0 && j === 0))
                         // it is a mine
                         && backBoard[x + i][y + j] === -1
                     ) {
@@ -70,6 +70,51 @@ function Game(numMine) {
             }
         }
     };
+    this.openOnePosition = function (x, y) {
+        try {
+            if (
+                // top is in 1~10
+                (x >= 0 && x <= 9)
+                // top is not mine
+                && (backBoard[x][y] >= 0)
+                // coordinate is not opened
+                && (frontBoard[x][y] === "P")
+            ) {
+                this.openBlock(x, y);
+            }
+        } catch (e) {
+            console.log(e);
+            this.logFront();
+            this.logBack();
+            console.log(x, y);
+        }
+    };
+    // The function to open the blocks -> x, y is the coordinate
+    this.openBlock = function (x, y) {
+        // if the coordinate is not a mine
+        if (backBoard[x][y] !== -1) {
+            // Show the coordinate
+            frontBoard[x][y] = backBoard[x][y];
+            // Check if the coordinate is empty
+            if (backBoard[x][y] === 0) {
+                // Iterate the x axis
+                for(let i = -1; i < 2; i ++) {
+                    // Iterate the y axis
+                    for (let j = -1; j < 2; j ++) {
+                        // Check if it is its own point
+                        if (!(i === 0 && j === 0)) {
+                            this.openOnePosition(x + i, y + j);
+                        }
+                    }
+                }
+            }
+        } else {
+            // condition that it is on the mine
+            console.log("You Lose");
+            win = false;
+            return null;
+        }
+    };
     // log the back board
     this.logBack = function () {
         let k = "";
@@ -86,6 +131,22 @@ function Game(numMine) {
         }
         console.log(k);
     };
+    // Function to log the front board
+    this.logFront = function () {
+        let k = "";
+        for(let i = 0; i < 10; i ++) {
+            let str = "";
+            for(let j = 0; j < 10; j ++) {
+                if (frontBoard[i][j] === "P") {
+                    str += "P "
+                } else {
+                    str += frontBoard[i][j] + " ";
+                }
+            }
+            k += str + "\n";
+        }
+        console.log(k);
+    };
     // Init the game
     this.initGame = function () {
         // Init the boards
@@ -94,6 +155,6 @@ function Game(numMine) {
         this.ranMine();
         // Cal all the sums
         this.calAll();
-        this.logBack(); 
+        this.logBack();
     };
 }
