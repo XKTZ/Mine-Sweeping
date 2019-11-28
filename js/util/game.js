@@ -136,7 +136,7 @@ function Game(numMine, sideLen) {
                     str += frontBoard[i][j] + " ";
                 }
             }
-            k += str + "\n";
+            k += str + "<br>";
         }
         return k;
     };
