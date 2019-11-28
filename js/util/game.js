@@ -85,24 +85,17 @@ function Game(numMine, sideLen) {
                         // Check if it is its own point
                         if (!(i === 0 && j === 0)) {
                             let cx = x + i, cy = y + j;
-                            try {
-                                if (
-                                    // top is in 1~10
-                                    (cx >= 0 && cx <= sideLen-1)
-                                    // btn is in 1~10
-                                    && (cy >= 0 && cy <= sideLen - 1)
-                                    // top is not mine
-                                    && (backBoard[cx][cy] >= 0)
-                                    // coordinate is not opened
-                                    && (frontBoard[cx][cy] === "P")
-                                ) {
-                                    this.openBlock(x, y);
-                                }
-                            } catch (e) {
-                                console.log(e);
-                                this.logFront();
-                                this.logBack();
-                                console.log(x, y);
+                            if (
+                                // top is in 1~10
+                                (cx >= 0 && cx <= sideLen-1)
+                                // btn is in 1~10
+                                && (cy >= 0 && cy <= sideLen - 1)
+                                // top is not mine
+                                && (backBoard[cx][cy] >= 0)
+                                // coordinate is not opened
+                                && (frontBoard[cx][cy] === "P")
+                            ) {
+                                this.openBlock(cx, cy);
                             }
                         }
                     }
@@ -115,8 +108,8 @@ function Game(numMine, sideLen) {
             return null;
         }
     };
-    // log the back board
-    this.logBack = function () {
+    // Function to get the back board
+    this.getBack = function () {
         let k = "";
         for(let i = 0; i < sideLen; i ++) {
             let str = "";
@@ -129,10 +122,10 @@ function Game(numMine, sideLen) {
             }
             k += str + "\n";
         }
-        console.log(k);
+        return k;
     };
-    // Function to log the front board
-    this.logFront = function () {
+    // Function to get the front board
+    this.getFront = function () {
         let k = "";
         for(let i = 0; i < sideLen; i ++) {
             let str = "";
@@ -145,8 +138,16 @@ function Game(numMine, sideLen) {
             }
             k += str + "\n";
         }
-        console.log(k);
+        return k;
     };
+    // Function to log the back board
+    this.logBack = function () {
+        console.log(this.getBack());
+    };
+    // Function to log the front board
+    this.logFront = function () {
+        console.log(this.getFront());
+    }
     // Init the game
     this.initGame = function () {
         // Init the boards
@@ -156,4 +157,5 @@ function Game(numMine, sideLen) {
         // Cal all the sums
         this.calAll();
     };
+    this.initGame();
 }
