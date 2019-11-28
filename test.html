@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mine Sweeping</title>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/vue.js"></script>
+    <script src="js/util/util.js"></script>
+</head>
+<body>
+<div id="game">
+    <button @click="startGame">sg</button>
+    <block x="3" y="3" word="P"></block>
+    <div class="gameBoard" v-html="gameStr">
+
+    </div>
+    <br>
+    <div class="answerBoard" v-html="backStr">
+
+    </div>
+</div>
+<script src="js/util/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

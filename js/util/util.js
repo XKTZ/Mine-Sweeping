@@ -4,7 +4,7 @@ function getRandomInt() {
 
 function getLenArr(len, node) {
     let result = [];
-    for(let i = 0; i < len; i ++) {
+    for (let i = 0; i < len; i++) {
         result.push(node);
     }
     return result;

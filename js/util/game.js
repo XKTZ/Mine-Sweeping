@@ -109,7 +109,7 @@ function Game(numMine, sideLen) {
         }
     };
     // Function to get the back board
-    this.getBack = function () {
+    this.getBack = function (sp) {
         let k = "";
         for(let i = 0; i < sideLen; i ++) {
             let str = "";
@@ -120,12 +120,12 @@ function Game(numMine, sideLen) {
                     str += backBoard[i][j] + " ";
                 }
             }
-            k += str + "\n";
+            k += str + sp;
         }
         return k;
     };
     // Function to get the front board
-    this.getFront = function () {
+    this.getFront = function (sp) {
         let k = "";
         for(let i = 0; i < sideLen; i ++) {
             let str = "";
@@ -136,7 +136,7 @@ function Game(numMine, sideLen) {
                     str += frontBoard[i][j] + " ";
                 }
             }
-            k += str + "<br>";
+            k += str + sp;
         }
         return k;
     };
@@ -147,7 +147,24 @@ function Game(numMine, sideLen) {
     // Function to log the front board
     this.logFront = function () {
         console.log(this.getFront());
-    }
+    };
+    // Function to check if win or not
+    this.checkWin = function () {
+        let numUnopened = 0;
+        // Iterate x
+        for(let i = 0; i < 10; i ++) {
+            // Iterate y
+            for (let j = 0; j < 10; j ++){
+                if (frontBoard[i][j] === "P") {
+                    numUnopened += 1;
+                }
+            }
+        }
+        return numUnopened <= numMine;
+    };
+    this.getBackBoard = function () {
+        return backBoard;
+    };
     // Init the game
     this.initGame = function () {
         // Init the boards
