@@ -4,44 +4,77 @@ let game = new Vue({
         // x: null,
         // y: null,
         gameOn: null,
-        gameStr: "",
-        gameBtn: "gameBtn",
         backStr: "",
+        blockHead: "#block",
+        squareSide: 10,
+        numMine: 10,
     },
     methods: {
         startGame: function () {
-            this.gameOn = new Game(10, 10);
-            this.gameStr = this.gameOn.getFront("<br>");
-            console.log(this.gameOn.getBack("\n"));
+            // Start the game
+            this.gameOn = new Game(this.squareSide, this.numMine);
+            // Fresh
+            this.showBoard();
+            this.backStr = "";
         },
-        openBlock: function (x, y) {
-            this.gameOn.openBlock(x, y);
-            this.gameStr = this.gameOn.getFront("<br>");
-            if (this.gameOn.checkWin()) {
-                alert('You win');
-                this.backStr = this.gameOn.getBack("<br>");
-                this.gameOn = null;
-            }
-        },
-        autoClear: function () {
-            for(let i = 0; i < 10; i ++) {
-                for(let j = 0; j < 10; j ++) {
-                    if (this.gameOn.getBackBoard()[i][j] !== -1) {
-                        this.openBlock(i, j);
-                    }
+        showBoard: function () {
+            // Get the front board
+            let fb = this.gameOn.getFrontBoard();
+            // Iterate X axis
+            for (let x = 0; x < 10; x++) {
+                // Iterate Y axis
+                for (let y = 0; y < 10; y++) {
+                    // Change the word of x, y
+                    $(this.blockHead + x + "-" + y).html(fb[x][y]);
                 }
             }
-            console.log("finish");
         },
+        openBlock: function (x, y) {
+            // open the block of the game
+            this.gameOn.openBlock(x, y);
+            // Show the new board
+            this.showBoard();
+            if (this.gameOn.checkWin()) {
+                // Alert that player win
+                alert('You Win');
+                // show the answer
+                this.backStr = this.gameOn.getBack("<br>");
+                // Delete the game
+                this.gameOn = null;
+            }
+            // if player lose
+            else if (this.gameOn.getWin() === false) {
+                // Alert that player lose
+                alert('You Lose');
+                // show the answer
+                this.backStr = this.gameOn.getBack("<br>");
+                // Delete the game
+                this.gameOn = null;
+            }
+            // if player is not win & not lose
+            else {
+            }
+        },
+        // autoClear: function () {
+        //     for(let i = 0; i < 10; i ++) {
+        //         for(let j = 0; j < 10; j ++) {
+        //             if (this.gameOn.getBackBoard()[i][j] !== -1) {
+        //                 this.openBlock(i, j);
+        //             }
+        //         }
+        //     }
+        //     console.log("finish");
+        // },
     },
     components: {
         'block': {
             template: `
-                <button @click="open" style="
+                <button :id='"block"+x+"-"+y' @click="open" style="
                     width: 30px;
                     height: 30px;
                     padding: 0;
                     margin: 0;
+                    font-size: 125%;
                 "
                 >
                     {{word}}
@@ -52,8 +85,10 @@ let game = new Vue({
                 open: function () {
                     game.openBlock(parseInt(this.x), parseInt(this.y));
                 },
+                changeWord: function (wordChange) {
+                    this.word = wordChange;
+                },
             },
         },
     },
 });
-

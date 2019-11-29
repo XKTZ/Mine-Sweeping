@@ -1,5 +1,5 @@
-function getRandomInt() {
-    return parseInt(Math.random() * 10);
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
 }
 
 function getLenArr(len, node) {

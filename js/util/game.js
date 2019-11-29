@@ -1,5 +1,5 @@
 // game Package
-function Game(numMine, sideLen) {
+function Game(sideLen, numMine) {
     // background array
     const backArr = getLenArr(sideLen, 0);
     // front array
@@ -58,8 +58,8 @@ function Game(numMine, sideLen) {
             // while mine is not used
             while (true) {
                 // Randomly get two values
-                let x = getRandomInt();
-                let y = getRandomInt();
+                let x = getRandomInt(sideLen);
+                let y = getRandomInt(sideLen);
                 // If this position is not mine
                 if (backBoard[x][y] !== -1) {
                     // Change it to mine
@@ -79,15 +79,15 @@ function Game(numMine, sideLen) {
             // Check if the coordinate is empty
             if (backBoard[x][y] === 0) {
                 // Iterate the x axis
-                for(let i = -1; i < 2; i ++) {
+                for (let i = -1; i < 2; i++) {
                     // Iterate the y axis
-                    for (let j = -1; j < 2; j ++) {
+                    for (let j = -1; j < 2; j++) {
                         // Check if it is its own point
                         if (!(i === 0 && j === 0)) {
                             let cx = x + i, cy = y + j;
                             if (
                                 // top is in 1~10
-                                (cx >= 0 && cx <= sideLen-1)
+                                (cx >= 0 && cx <= sideLen - 1)
                                 // btn is in 1~10
                                 && (cy >= 0 && cy <= sideLen - 1)
                                 // top is not mine
@@ -104,16 +104,16 @@ function Game(numMine, sideLen) {
         } else {
             // condition that it is on the mine
             console.log("You Lose");
+            frontBoard[x][y] = "M";
             win = false;
-            return null;
         }
     };
     // Function to get the back board
     this.getBack = function (sp) {
         let k = "";
-        for(let i = 0; i < sideLen; i ++) {
+        for (let i = 0; i < sideLen; i++) {
             let str = "";
-            for(let j = 0; j < sideLen; j ++) {
+            for (let j = 0; j < sideLen; j++) {
                 if (backBoard[i][j] === -1) {
                     str += "M "
                 } else {
@@ -127,9 +127,9 @@ function Game(numMine, sideLen) {
     // Function to get the front board
     this.getFront = function (sp) {
         let k = "";
-        for(let i = 0; i < sideLen; i ++) {
+        for (let i = 0; i < sideLen; i++) {
             let str = "";
-            for(let j = 0; j < sideLen; j ++) {
+            for (let j = 0; j < sideLen; j++) {
                 if (frontBoard[i][j] === "P") {
                     str += "P "
                 } else {
@@ -152,9 +152,9 @@ function Game(numMine, sideLen) {
     this.checkWin = function () {
         let numUnopened = 0;
         // Iterate x
-        for(let i = 0; i < 10; i ++) {
+        for (let i = 0; i < sideLen; i++) {
             // Iterate y
-            for (let j = 0; j < 10; j ++){
+            for (let j = 0; j < sideLen; j++) {
                 if (frontBoard[i][j] === "P") {
                     numUnopened += 1;
                 }
@@ -164,6 +164,12 @@ function Game(numMine, sideLen) {
     };
     this.getBackBoard = function () {
         return backBoard;
+    };
+    this.getFrontBoard = function () {
+        return frontBoard;
+    };
+    this.getWin = function () {
+        return win;
     };
     // Init the game
     this.initGame = function () {
