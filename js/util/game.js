@@ -86,9 +86,9 @@ function Game(sideLen, numMine) {
                         if (!(i === 0 && j === 0)) {
                             let cx = x + i, cy = y + j;
                             if (
-                                // top is in 1~10
+                                // top is in 1~sideLen
                                 (cx >= 0 && cx <= sideLen - 1)
-                                // btn is in 1~10
+                                // btn is in 1~sideLen
                                 && (cy >= 0 && cy <= sideLen - 1)
                                 // top is not mine
                                 && (backBoard[cx][cy] >= 0)

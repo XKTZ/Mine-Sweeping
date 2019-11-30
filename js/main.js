@@ -1,8 +1,6 @@
 let game = new Vue({
     el: "#game",
     data: {
-        // x: null,
-        // y: null,
         gameOn: null,
         backStr: "",
         blockHead: "#block",
@@ -21,9 +19,9 @@ let game = new Vue({
             // Get the front board
             let fb = this.gameOn.getFrontBoard();
             // Iterate X axis
-            for (let x = 0; x < 10; x++) {
+            for (let x = 0; x < this.squareSide; x++) {
                 // Iterate Y axis
-                for (let y = 0; y < 10; y++) {
+                for (let y = 0; y < this.squareSide; y++) {
                     // Change the word of x, y
                     $(this.blockHead + x + "-" + y).html(fb[x][y]);
                 }
@@ -55,16 +53,6 @@ let game = new Vue({
             else {
             }
         },
-        // autoClear: function () {
-        //     for(let i = 0; i < 10; i ++) {
-        //         for(let j = 0; j < 10; j ++) {
-        //             if (this.gameOn.getBackBoard()[i][j] !== -1) {
-        //                 this.openBlock(i, j);
-        //             }
-        //         }
-        //     }
-        //     console.log("finish");
-        // },
     },
     components: {
         'block': {

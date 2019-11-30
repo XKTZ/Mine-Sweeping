@@ -9,15 +9,17 @@
 </head>
 <body>
 <div id="game">
-    <button @click="startGame">start</button>
-    <br>
-    x: <input type="text" v-model.number="x">
-    <br>
-    y: <input type="text" v-model.number="y">
-    <br>
-    <button @click="openBlock">open</button>
-    <br>
-    <div v-html="gameStr"></div>
+    <button @click="startGame">sg</button>
+    <input type="text" v-model.number="squareSide">
+    <div>
+        <div v-for="lx in squareSide">
+            <block v-for="ly in squareSide" :x="lx-1" :y="ly-1" word="P"></block>
+        </div>
+    </div>
+    <div class="mainGame">
+
+    </div>
+    <div class="answerBoard" v-html="backStr"></div>
 </div>
 <script src="js/util/game.js"></script>
 <script src="js/main.js"></script>
