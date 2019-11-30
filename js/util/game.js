@@ -171,6 +171,20 @@ function Game(sideLen, numMine) {
     this.getWin = function () {
         return win;
     };
+    // Methods to open all the blocks
+    this.openAll = function () {
+        for (let i = 0; i < sideLen; i++) {
+            for (let j = 0; j < sideLen; j++) {
+                if (backBoard[i][j] === -1) {
+                    frontBoard[i][j] = "M";
+                }
+                else
+                {
+                    frontBoard[i][j] = backBoard[i][j];
+                }
+            }
+        }
+    };
     // Init the game
     this.initGame = function () {
         // Init the boards

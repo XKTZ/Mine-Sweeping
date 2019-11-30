@@ -2,13 +2,17 @@ let game = new Vue({
     el: "#game",
     data: {
         gameOn: null,
-        backStr: "",
         blockHead: "#block",
         squareSide: 10,
         numMine: 10,
     },
     methods: {
         startGame: function () {
+            // check if the blocks are enough for mine
+            if (this.numMine > this.squareSide * this.squareSide) {
+                alert("Not enough block for mines");
+                return;
+            }
             // Start the game
             this.gameOn = new Game(this.squareSide, this.numMine);
             // Fresh
@@ -35,8 +39,9 @@ let game = new Vue({
             if (this.gameOn.checkWin()) {
                 // Alert that player win
                 alert('You Win');
-                // show the answer
-                this.backStr = this.gameOn.getBack("<br>");
+                // show the board
+                this.gameOn.openAll();
+                this.showBoard();
                 // Delete the game
                 this.gameOn = null;
             }
@@ -44,8 +49,9 @@ let game = new Vue({
             else if (this.gameOn.getWin() === false) {
                 // Alert that player lose
                 alert('You Lose');
-                // show the answer
-                this.backStr = this.gameOn.getBack("<br>");
+                // Show the board
+                this.gameOn.openAll();
+                this.showBoard();
                 // Delete the game
                 this.gameOn = null;
             }
