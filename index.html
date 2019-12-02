@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Mine Sweeping</title>
+<!--    import the library-->
     <script src="lib/jquery.js"></script>
     <script src="lib/vue.js"></script>
+<!--    import the util-->
     <script src="js/util/util.js"></script>
 </head>
 <body>
-<div id="game">
-    <button @click="startGame">sg</button>
-    <input type="text" v-model.number="squareSide">
-    <div>
-        <div v-for="lx in squareSide">
-            <block v-for="ly in squareSide" :x="lx-1" :y="ly-1" word="P"></block>
+    <!--the total game div-->
+    <div id="game">
+        <div class="gameBoard">
+                <div v-for="lx in squareSide">
+                    <block v-for="ly in squareSide" :x="lx-1" :y="ly-1" word="P"></block>
+                </div>
         </div>
     </div>
-    <div class="mainGame">
-
-    </div>
-</div>
-<script src="js/util/game.js"></script>
-<script src="js/main.js"></script>
+    <!--    import the game object-->
+    <script src="js/util/game.js"></script>
+    <!--    import the main-->
+    <script src="js/main.js"></script>
 </body>
 </html>

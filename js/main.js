@@ -77,12 +77,11 @@ let game = new Vue({
             props: ['x', 'y', 'word'],
             methods: {
                 open: function () {
+                    // if the button is clicked, open the button
                     game.openBlock(parseInt(this.x), parseInt(this.y));
-                },
-                changeWord: function (wordChange) {
-                    this.word = wordChange;
                 },
             },
         },
     },
 });
+
