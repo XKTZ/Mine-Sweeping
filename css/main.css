@@ -1,4 +1,18 @@
-.gameBoard {
-    /*Put into middle*/
-    margin: auto;
+/* css of the total body */
+body {
+    text-align: center;
 }
+
+/*css of the operation board*/
+.operationBoard {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+/*css of the game start button*/
+.startGame {
+    font-size: 200%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+

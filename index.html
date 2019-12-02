@@ -8,10 +8,22 @@
     <script src="lib/vue.js"></script>
 <!--    import the util-->
     <script src="js/util/util.js"></script>
+<!--    css importer-->
+    <link rel="stylesheet" href="css/component.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <!--the total game div-->
     <div id="game">
+        <div class="operationBoard">
+            <button @click="startGame" class="startGame">Start A New Game!</button>
+            <div class="inputDiv">
+                Side Lens: <input type="text" v-model.number="squareSide">
+            </div>
+            <div class="inputDiv">
+                Num Mine: <input type="text" v-model.number="numMine">
+            </div>
+        </div>
         <div class="gameBoard">
                 <div v-for="lx in squareSide">
                     <block v-for="ly in squareSide" :x="lx-1" :y="ly-1" word="P"></block>
