@@ -15,8 +15,10 @@
 <body>
     <!--the total game div-->
     <div id="game">
+        <div>
+            <button @click="btnOperateClick" class="btnOperate">{{strBtnOperate}}</button>
+        </div>
         <div class="operationBoard">
-            <button @click="startGame" class="startGame">Start A New Game!</button>
             <div class="inputDiv">
                 Side Lens: <input type="text" v-model.number="squareSide">
             </div>
@@ -29,6 +31,7 @@
                     <block v-for="ly in squareSide" :x="lx-1" :y="ly-1" word="P"></block>
                 </div>
         </div>
+        
     </div>
     <!--    import the game object-->
     <script src="js/util/game.js"></script>

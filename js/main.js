@@ -5,20 +5,50 @@ let game = new Vue({
         blockHead: "#block",
         squareSide: 10,
         numMine: 10,
+        // False -> True to End | True -> Turn to Start
+        inGame: false,
+        strBtnOperate: "Start A New Game!",
     },
     methods: {
-        startGame: function () {
-            // check if the blocks are enough for mine
-            if (this.numMine > this.squareSide * this.squareSide) {
-                alert("Not enough block for mines");
-                return;
+        // Method to start a new game
+        btnOperateClick: function () {
+            // need to start a game
+            if (this.inGame === false) {
+                this.inGame = true;
+                this.strBtnOperate = "End This Game";
+                // check if the blocks are enough for mine
+                if (this.numMine > this.squareSide * this.squareSide) {
+                    alert("Not enough block for mines");
+                    return;
+                }
+                // show the game board and set the top margin
+                $(".gameBoard").css("margin-top", "5%");
+                // hide the operation board
+                $(".operationBoard").css("display", "none");
+                // show the end button and cancel the start button
+                // Start the game
+                this.gameOn = new Game(this.squareSide, this.numMine);
+                // Fresh
+                this.showBoard();
+                // Already in a game -> End the game
+            } else {
+                // End the game
+                this.endGame();
             }
-            // Start the game
-            this.gameOn = new Game(this.squareSide, this.numMine);
-            // Fresh
-            this.showBoard();
-            this.backStr = "";
         },
+        // Method to end a game
+        endGame: function () {
+            // turn to end
+            this.inGame = false;
+            this.strBtnOperate = "Start A New Game!";
+            // cancel the game
+            this.gameOn = null;
+            // show the operation board and cancel the margin of game board
+            $(".operationBoard").css("display", "block");
+            $(".gameBoard").css("margin-top", "0px");
+
+        },
+        // Method to show the blocks
         showBoard: function () {
             // Get the front board
             let fb = this.gameOn.getFrontBoard();
@@ -31,32 +61,40 @@ let game = new Vue({
                 }
             }
         },
+        // Method to open the block
         openBlock: function (x, y) {
-            // open the block of the game
-            this.gameOn.openBlock(x, y);
-            // Show the new board
-            this.showBoard();
-            if (this.gameOn.checkWin()) {
-                // Alert that player win
-                alert('You Win');
-                // show the board
-                this.gameOn.openAll();
+            try {
+                // open the block of the game
+                this.gameOn.openBlock(x, y);
+                // Show the new board
                 this.showBoard();
-                // Delete the game
-                this.gameOn = null;
-            }
-            // if player lose
-            else if (this.gameOn.getWin() === false) {
-                // Alert that player lose
-                alert('You Lose');
-                // Show the board
-                this.gameOn.openAll();
-                this.showBoard();
-                // Delete the game
-                this.gameOn = null;
-            }
-            // if player is not win & not lose
-            else {
+                if (this.gameOn.checkWin()) {
+                    // Alert that player win
+                    alert('You Win');
+                    // show the board
+                    this.gameOn.openAll();
+                    this.showBoard();
+                    // end the game
+                    this.endGame();
+                }
+                // if player lose
+                else if (this.gameOn.getWin() === false) {
+                    // Alert that player lose
+                    alert('You Lose');
+                    // Show the board
+                    this.gameOn.openAll();
+                    this.showBoard();
+                    // end the game
+                    this.endGame();
+                }
+                // if player is not win & not lose
+                else {
+                }
+            } catch (e) {
+                // if it is type error -> it is because the game is not start
+                if (e instanceof TypeError){
+                    console.log("game is not start yet");
+                }
             }
         },
     },
