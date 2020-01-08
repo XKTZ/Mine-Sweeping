@@ -71,6 +71,8 @@ let game = new Vue({
                 if (this.gameOn.checkWin()) {
                     // Alert that player win
                     alert('You Win');
+                    // Play victory sound
+                    $.playSound("sound/Victory.mp3");
                     // show the board
                     this.gameOn.openAll();
                     this.showBoard();
