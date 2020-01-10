@@ -62,6 +62,8 @@ let game = new Vue({
             this.gameOn = null;
             // clear interval
             clearInterval(this.intervalIn);
+            this.timeClock.min = 0;
+            this.timeClock.sec = 0;
             // show the operation board and cancel the margin of game board
             $(".operationBoard").css("display", "block");
             $(".gameBoard").css("margin-top", "0px");
