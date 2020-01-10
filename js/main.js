@@ -9,8 +9,10 @@ let game = new Vue({
         inGame: false,
         strBtnOperate: "Start A New Game!",
         intervalIn: null,
-        second: 0,
-        minute: 0,
+        timeClock: {
+            sec: 0,
+            min: 0,
+        },
     },
     methods: {
         // Method to start a new game
@@ -33,15 +35,17 @@ let game = new Vue({
                 this.gameOn = new Game(this.squareSide, this.numMine);
                 // Fresh
                 this.showBoard();
+                // the clock object (interval can not get the object in Vue)
+                let clock = this.timeClock;
                 // set interval
                 this.intervalIn = setInterval(function () {
-                    if(this.second === 59) {
-                        this.second = 0;
-                        this.minute += 1;
+                    // check if need to add one minute
+                    if (clock.sec === 59) {
+                        clock.sec = 0;
+                        clock.min += 1;
                     } else {
-                        this.second += 1;
+                        clock.sec += 1;
                     }
-                    console.log(1);
                 }, 1000);
                 // Already in a game -> End the game
             } else {
